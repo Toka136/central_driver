@@ -27,13 +27,11 @@ async def update(data: StatusUpdate):
 @app.websocket("/ws/driver-status")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    data=await websocket.receive_text()
-    if data.lower() == "start":
-     try:
+    try:
          while True:
             await websocket.send_json(driver_metrics)
-            await asyncio.sleep(0.1)
-     except WebSocketDisconnect:
+            await asyncio.sleep(0.5)
+    except WebSocketDisconnect:
          pass
 
 if __name__ == "__main__":
